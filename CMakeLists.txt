@@ -54,6 +54,8 @@ add_library(hotstuff
     src/entity.cpp
     src/consensus.cpp
     src/hotstuff.cpp
+    src/Coo.cpp
+    src/serial.cpp
     )
 
 option(BUILD_SHARED "build shared library." OFF)
@@ -70,7 +72,7 @@ target_link_libraries(hotstuff_static salticidae_static secp256k1 crypto ${CMAKE
 add_subdirectory(test)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    set(CMAKE_BUILD_TYPE "Release")
+    set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 option(HOTSTUFF_DEBUG_LOG "enable debug log" OFF)

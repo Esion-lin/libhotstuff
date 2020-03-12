@@ -147,7 +147,9 @@ class Block {
         qc_ref(nullptr),
         self_qc(nullptr), height(0),
         delivered(delivered), decision(decision) {}
-
+    /*
+    this function I change the block hash into the cmds[0]
+    */
     Block(const std::vector<block_t> &parents,
         const std::vector<uint256_t> &cmds,
         quorum_cert_bt &&qc,

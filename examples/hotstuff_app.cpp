@@ -158,6 +158,8 @@ int main(int argc, char **argv) {
     auto opt_client_port = Config::OptValInt::create(-1);
     auto opt_privkey = Config::OptValStr::create();
     auto opt_tls_privkey = Config::OptValStr::create();
+    auto opt_coo_listen_port = Config::OptValInt::create(10060);
+    auto opt_coo_send_port = Config::OptValInt::create(10000);
     auto opt_tls_cert = Config::OptValStr::create();
     auto opt_help = Config::OptValFlag::create(false);
     auto opt_pace_maker = Config::OptValStr::create("dummy");
@@ -178,6 +180,8 @@ int main(int argc, char **argv) {
     config.add_opt("replica", opt_replicas, Config::APPEND, 'a', "add an replica to the list");
     config.add_opt("idx", opt_idx, Config::SET_VAL, 'i', "specify the index in the replica list");
     config.add_opt("cport", opt_client_port, Config::SET_VAL, 'c', "specify the port listening for clients");
+    config.add_opt("coo_listen_port", opt_coo_listen_port, Config::SET_VAL);
+    config.add_opt("coo_send_port", opt_coo_send_port, Config::SET_VAL);
     config.add_opt("privkey", opt_privkey, Config::SET_VAL);
     config.add_opt("tls-privkey", opt_tls_privkey, Config::SET_VAL);
     config.add_opt("tls-cert", opt_tls_cert, Config::SET_VAL);
@@ -268,6 +272,9 @@ int main(int argc, char **argv) {
                         opt_nworker->get(),
                         repnet_config,
                         clinet_config);
+    papp->listen_port_for_coo = opt_coo_listen_port.get()->get();
+    papp->send_port_for_coo = opt_coo_send_port.get()->get();
+    HOTSTUFF_LOG_INFO("opt_coo_listen_port is %d\n", opt_coo_listen_port.get()->get());
     std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
     for (auto &r: replicas)
     {
@@ -333,7 +340,7 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
     const NetAddr addr = conn->get_addr();
     auto cmd = parse_cmd(msg.serialized);
     const auto &cmd_hash = cmd->get_hash();
-    HOTSTUFF_LOG_DEBUG("processing %s", std::string(*cmd).c_str());
+    HOTSTUFF_LOG_INFO("processing %s", std::string(*cmd).c_str());
     exec_command(cmd_hash, [this, addr](Finality fin) {
         resp_queue.enqueue(std::make_pair(fin, addr));
     });

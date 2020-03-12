@@ -20,8 +20,8 @@
 
 #include <queue>
 #include <unordered_map>
+#include <pthread.h>
 #include <unordered_set>
-
 #include "salticidae/util.h"
 #include "salticidae/network.h"
 #include "salticidae/msg.h"
@@ -37,7 +37,6 @@ using salticidae::_2;
 
 const double ent_waiting_timeout = 10;
 const double double_inf = 1e10;
-
 /** Network message format for HotStuff. */
 struct MsgPropose {
     static const opcode_t opcode = 0x0;
@@ -125,14 +124,14 @@ class BlockDeliveryContext: public promise_t {
 class HotStuffBase: public HotStuffCore {
     using BlockFetchContext = FetchContext<ENT_TYPE_BLK>;
     using CmdFetchContext = FetchContext<ENT_TYPE_CMD>;
-
+    
     friend BlockFetchContext;
     friend CmdFetchContext;
 
     public:
+    
     using Net = PeerNetwork<opcode_t>;
     using commit_cb_t = std::function<void(const Finality &)>;
-
     protected:
     /** the binding address in replica network */
     NetAddr listen_addr;
@@ -143,7 +142,10 @@ class HotStuffBase: public HotStuffCore {
     salticidae::ThreadCall tcall;
     VeriPool vpool;
     std::vector<NetAddr> peers;
-
+    /** communication with coordinator **/
+    
+    Coo *coo;
+    
     private:
     /** whether libevent handle is owned by itself */
     bool ec_loop;
@@ -158,6 +160,7 @@ class HotStuffBase: public HotStuffCore {
     std::unordered_map<const uint256_t, BlockFetchContext> blk_fetch_waiting;
     std::unordered_map<const uint256_t, BlockDeliveryContext> blk_delivery_waiting;
     std::unordered_map<const uint256_t, commit_cb_t> decision_waiting;
+    
     using cmd_queue_t = salticidae::MPSCQueueEventDriven<std::pair<uint256_t, commit_cb_t>>;
     cmd_queue_t cmd_pending;
     std::queue<uint256_t> cmd_pending_buffer;

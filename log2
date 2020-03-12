@@ -1,0 +1,831 @@
+2020-03-12 11:26:00.370790 [net info] loaded configuration from hotstuff.conf
+2020-03-12 11:26:00.370905 [net info] loading extra configuration from ./hotstuff-sec2.conf
+2020-03-12 11:26:00.376065 [net info] starting all threads...
+2020-03-12 11:26:00.376269 [net info] listening to 10002
+2020-03-12 11:26:00.379022 [net info] starting all threads...
+2020-03-12 11:26:00.379411 [net info] listening to 20002
+2020-03-12 11:26:00.379453 [hotstuff info] opt_coo_listen_port is 10062
+
+2020-03-12 11:26:00.379577 [hotstuff info] ** starting the system with parameters **
+2020-03-12 11:26:00.379589 [hotstuff info] blk_size = 1
+2020-03-12 11:26:00.379597 [hotstuff info] conns = 0
+2020-03-12 11:26:00.379603 [hotstuff info] ** starting the event loop...
+2020-03-12 11:26:00.379682 [hotstuff proto] Pacemaker: stop rotation at 0
+2020-03-12 11:26:00.379981 [net info] created <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.380236 [net info] created <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:00.380435 [net info] created <Conn fd=90 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:00.380462 [net info] connected to remote <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.380601 [net info] worker d2128700 got <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.380633 [net info] connection lost: <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:00.380663 [net info] connection lost: <Conn fd=90 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:00.385846 [net info] accepted <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.385883 [net info] connection: <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.385915 [net info] worker d2128700 got <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.387312 [net info] <NetAddr 127.0.0.1:10002> outbound handshake to <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.387890 [net info] accepted <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:00.387934 [net info] worker d2128700 got <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:00.388302 [net info] accepted <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:00.388348 [net info] worker d2128700 got <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:00.392614 [net info] connection: <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.392999 [net info] connection: <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:00.393055 [net info] <NetAddr 127.0.0.1:10002> inbound handshake from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.393078 [net info] PeerNetwork: established connection <NetAddr 127.0.0.1:10002> <-> <NetAddr 127.0.0.1:10000> via <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.393119 [net info] connection lost: <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:26:00.394985 [net info] connection: <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:00.395088 [net info] <NetAddr 127.0.0.1:10002> inbound handshake from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:00.395152 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:00.396692 [net info] <NetAddr 127.0.0.1:10002> inbound handshake from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:02.777467 [net info] created <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.777547 [net info] connected to remote <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.777594 [net info] worker d2128700 got <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.782945 [net info] connection: <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.783883 [net info] <NetAddr 127.0.0.1:10002> outbound handshake to <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.783951 [net info] destroyed <Conn fd=90 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:02.784005 [net info] PeerNetwork: established connection <NetAddr 127.0.0.1:10002> <-> <NetAddr 127.0.0.1:10003> via <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:02.784023 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:02.784084 [net info] connection lost: <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:26:03.221948 [net info] created <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.222030 [net info] connected to remote <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.222084 [net info] worker d2128700 got <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.228115 [net info] connection: <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.229100 [net info] <NetAddr 127.0.0.1:10002> outbound handshake to <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.229138 [net info] destroyed <Conn fd=86 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:03.229194 [net info] PeerNetwork: established connection <NetAddr 127.0.0.1:10002> <-> <NetAddr 127.0.0.1:10001> via <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:03.229211 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:03.229271 [net info] connection lost: <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:26:10.377648 [hotstuff info] ===== begin stats =====
+2020-03-12 11:26:10.377691 [hotstuff info] -------- queues -------
+2020-03-12 11:26:10.377698 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:26:10.377704 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:26:10.377709 [hotstuff info] decision_waiting: 0
+2020-03-12 11:26:10.377714 [hotstuff info] -------- misc ---------
+2020-03-12 11:26:10.377719 [hotstuff info] fetched: 0
+2020-03-12 11:26:10.377724 [hotstuff info] delivered: 0
+2020-03-12 11:26:10.377729 [hotstuff info] cmd_cache: 0
+2020-03-12 11:26:10.377734 [hotstuff info] blk_cache: 1
+2020-03-12 11:26:10.377739 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:26:10.377744 [hotstuff info] fetched: 0
+2020-03-12 11:26:10.377749 [hotstuff info] delivered: 0
+2020-03-12 11:26:10.377754 [hotstuff info] decided: 0
+2020-03-12 11:26:10.377759 [hotstuff info] gened: 0
+2020-03-12 11:26:10.377764 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:26:10.377771 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:26:10.377778 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:26:10.377813 [hotstuff info] <NetAddr 127.0.0.1:10000>: 3(41), 3(41), 0
+2020-03-12 11:26:10.377838 [hotstuff info] <NetAddr 127.0.0.1:10001>: 3(41), 3(41), 0
+2020-03-12 11:26:10.377859 [hotstuff info] <NetAddr 127.0.0.1:10003>: 3(41), 3(41), 0
+2020-03-12 11:26:10.377870 [hotstuff info] sent: 9
+2020-03-12 11:26:10.377875 [hotstuff info] recv: 9
+2020-03-12 11:26:10.377880 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:26:10.377884 [hotstuff info] sent: 9
+2020-03-12 11:26:10.377889 [hotstuff info] recv: 9
+2020-03-12 11:26:10.377894 [hotstuff info] ====== end stats ======
+2020-03-12 11:26:10.377899 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:26:10.377903 [hotstuff info] --- end client msg. ---
+2020-03-12 11:26:20.386414 [hotstuff info] ===== begin stats =====
+2020-03-12 11:26:20.386484 [hotstuff info] -------- queues -------
+2020-03-12 11:26:20.386500 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:26:20.386513 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:26:20.386525 [hotstuff info] decision_waiting: 0
+2020-03-12 11:26:20.386537 [hotstuff info] -------- misc ---------
+2020-03-12 11:26:20.386548 [hotstuff info] fetched: 0
+2020-03-12 11:26:20.386558 [hotstuff info] delivered: 0
+2020-03-12 11:26:20.386569 [hotstuff info] cmd_cache: 0
+2020-03-12 11:26:20.386596 [hotstuff info] blk_cache: 1
+2020-03-12 11:26:20.386608 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:26:20.386618 [hotstuff info] fetched: 0
+2020-03-12 11:26:20.386629 [hotstuff info] delivered: 0
+2020-03-12 11:26:20.386639 [hotstuff info] decided: 0
+2020-03-12 11:26:20.386649 [hotstuff info] gened: 0
+2020-03-12 11:26:20.386659 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:26:20.386672 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:26:20.386685 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:26:20.386744 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:26:20.386786 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:26:20.386835 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:26:20.386856 [hotstuff info] sent: 0
+2020-03-12 11:26:20.386869 [hotstuff info] recv: 0
+2020-03-12 11:26:20.386880 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:26:20.386891 [hotstuff info] sent: 9
+2020-03-12 11:26:20.386901 [hotstuff info] recv: 9
+2020-03-12 11:26:20.386912 [hotstuff info] ====== end stats ======
+2020-03-12 11:26:20.386922 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:26:20.386932 [hotstuff info] --- end client msg. ---
+2020-03-12 11:26:30.395152 [hotstuff info] ===== begin stats =====
+2020-03-12 11:26:30.395211 [hotstuff info] -------- queues -------
+2020-03-12 11:26:30.395225 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:26:30.395238 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:26:30.395250 [hotstuff info] decision_waiting: 0
+2020-03-12 11:26:30.395261 [hotstuff info] -------- misc ---------
+2020-03-12 11:26:30.395271 [hotstuff info] fetched: 0
+2020-03-12 11:26:30.395282 [hotstuff info] delivered: 0
+2020-03-12 11:26:30.395292 [hotstuff info] cmd_cache: 0
+2020-03-12 11:26:30.395302 [hotstuff info] blk_cache: 1
+2020-03-12 11:26:30.395312 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:26:30.395321 [hotstuff info] fetched: 0
+2020-03-12 11:26:30.395331 [hotstuff info] delivered: 0
+2020-03-12 11:26:30.395341 [hotstuff info] decided: 0
+2020-03-12 11:26:30.395350 [hotstuff info] gened: 0
+2020-03-12 11:26:30.395360 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:26:30.395373 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:26:30.395385 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:26:30.395453 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:26:30.395496 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:26:30.395535 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:26:30.395548 [hotstuff info] sent: 0
+2020-03-12 11:26:30.395557 [hotstuff info] recv: 0
+2020-03-12 11:26:30.395566 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:26:30.395575 [hotstuff info] sent: 9
+2020-03-12 11:26:30.395584 [hotstuff info] recv: 9
+2020-03-12 11:26:30.395593 [hotstuff info] ====== end stats ======
+2020-03-12 11:26:30.395601 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:26:30.395610 [hotstuff info] --- end client msg. ---
+2020-03-12 11:26:34.505824 [hotstuff info] recv size: 34
+
+2020-03-12 11:26:34.505906 [hotstuff info] recv data: 
+
+2020-03-12 11:26:34.505918 [hotstuff info] recv id: 1
+
+2020-03-12 11:26:35.601459 [hotstuff proto] got <proposal rid=0 blk=1e327ff85d>
+2020-03-12 11:26:35.601532 [hotstuff info] ele hash is:58574a574a
+
+2020-03-12 11:26:35.601608 [hotstuff proto] now state: <hotstuff hqc=dd46c3eebb hqc.height=0 b_lock=dd46c3eebb b_exec=dd46c3eebb vheight=1 tails=1>
+2020-03-12 11:26:35.601633 [hotstuff info] now return msg size: 1
+
+2020-03-12 11:26:35.747497 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:26:36.192922 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:26:36.310610 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:26:40.398704 [hotstuff info] ===== begin stats =====
+2020-03-12 11:26:40.398807 [hotstuff info] -------- queues -------
+2020-03-12 11:26:40.398822 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:26:40.398839 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:26:40.398853 [hotstuff info] decision_waiting: 0
+2020-03-12 11:26:40.398866 [hotstuff info] -------- misc ---------
+2020-03-12 11:26:40.398880 [hotstuff info] fetched: 0
+2020-03-12 11:26:40.398892 [hotstuff info] delivered: 1
+2020-03-12 11:26:40.398905 [hotstuff info] cmd_cache: 0
+2020-03-12 11:26:40.398918 [hotstuff info] blk_cache: 2
+2020-03-12 11:26:40.398930 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:26:40.398941 [hotstuff info] fetched: 0
+2020-03-12 11:26:40.398952 [hotstuff info] delivered: 1
+2020-03-12 11:26:40.398963 [hotstuff info] decided: 0
+2020-03-12 11:26:40.398974 [hotstuff info] gened: 0
+2020-03-12 11:26:40.398986 [hotstuff info] avg. parent_size: 1.000
+2020-03-12 11:26:40.399002 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:26:40.399023 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:26:40.399115 [hotstuff info] <NetAddr 127.0.0.1:10000>: 2(131), 2(124), 0
+2020-03-12 11:26:40.399161 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:26:40.399203 [hotstuff info] <NetAddr 127.0.0.1:10003>: 2(2), 2(2), 0
+2020-03-12 11:26:40.399220 [hotstuff info] sent: 5
+2020-03-12 11:26:40.399232 [hotstuff info] recv: 5
+2020-03-12 11:26:40.399244 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:26:40.399255 [hotstuff info] sent: 14
+2020-03-12 11:26:40.399266 [hotstuff info] recv: 14
+2020-03-12 11:26:40.399277 [hotstuff info] ====== end stats ======
+2020-03-12 11:26:40.399289 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:26:40.399301 [hotstuff info] --- end client msg. ---
+2020-03-12 11:26:50.402427 [hotstuff info] ===== begin stats =====
+2020-03-12 11:26:50.402507 [hotstuff info] -------- queues -------
+2020-03-12 11:26:50.402524 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:26:50.402538 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:26:50.402550 [hotstuff info] decision_waiting: 0
+2020-03-12 11:26:50.402563 [hotstuff info] -------- misc ---------
+2020-03-12 11:26:50.402574 [hotstuff info] fetched: 0
+2020-03-12 11:26:50.402585 [hotstuff info] delivered: 1
+2020-03-12 11:26:50.402597 [hotstuff info] cmd_cache: 0
+2020-03-12 11:26:50.402608 [hotstuff info] blk_cache: 2
+2020-03-12 11:26:50.402618 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:26:50.402628 [hotstuff info] fetched: 0
+2020-03-12 11:26:50.402639 [hotstuff info] delivered: 0
+2020-03-12 11:26:50.402650 [hotstuff info] decided: 0
+2020-03-12 11:26:50.402660 [hotstuff info] gened: 0
+2020-03-12 11:26:50.402671 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:26:50.402686 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:26:50.402699 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:26:50.402761 [hotstuff info] <NetAddr 127.0.0.1:10000>: 1(1), 1(1), 0
+2020-03-12 11:26:50.402802 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:26:50.402842 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:26:50.402858 [hotstuff info] sent: 2
+2020-03-12 11:26:50.402870 [hotstuff info] recv: 2
+2020-03-12 11:26:50.402881 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:26:50.402891 [hotstuff info] sent: 16
+2020-03-12 11:26:50.402902 [hotstuff info] recv: 16
+2020-03-12 11:26:50.402912 [hotstuff info] ====== end stats ======
+2020-03-12 11:26:50.402923 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:26:50.402933 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:00.406406 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:00.406450 [hotstuff info] -------- queues -------
+2020-03-12 11:27:00.406459 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:00.406466 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:00.406473 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:00.406480 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:00.406486 [hotstuff info] fetched: 0
+2020-03-12 11:27:00.406502 [hotstuff info] delivered: 1
+2020-03-12 11:27:00.406509 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:00.406515 [hotstuff info] blk_cache: 2
+2020-03-12 11:27:00.406521 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:00.406527 [hotstuff info] fetched: 0
+2020-03-12 11:27:00.406533 [hotstuff info] delivered: 0
+2020-03-12 11:27:00.406539 [hotstuff info] decided: 0
+2020-03-12 11:27:00.406545 [hotstuff info] gened: 0
+2020-03-12 11:27:00.406551 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:27:00.406560 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:27:00.406567 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:00.406617 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:27:00.406647 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:27:00.406673 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:27:00.406681 [hotstuff info] sent: 0
+2020-03-12 11:27:00.406686 [hotstuff info] recv: 0
+2020-03-12 11:27:00.406691 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:00.406696 [hotstuff info] sent: 16
+2020-03-12 11:27:00.406701 [hotstuff info] recv: 16
+2020-03-12 11:27:00.406706 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:00.406710 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:00.406715 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:10.407346 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:10.407415 [hotstuff info] -------- queues -------
+2020-03-12 11:27:10.407428 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:10.407440 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:10.407451 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:10.407461 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:10.407471 [hotstuff info] fetched: 0
+2020-03-12 11:27:10.407482 [hotstuff info] delivered: 1
+2020-03-12 11:27:10.407492 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:10.407503 [hotstuff info] blk_cache: 2
+2020-03-12 11:27:10.407513 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:10.407522 [hotstuff info] fetched: 0
+2020-03-12 11:27:10.407532 [hotstuff info] delivered: 0
+2020-03-12 11:27:10.407542 [hotstuff info] decided: 0
+2020-03-12 11:27:10.407553 [hotstuff info] gened: 0
+2020-03-12 11:27:10.407563 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:27:10.407575 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:27:10.407588 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:10.407674 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:27:10.407715 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:27:10.407753 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:27:10.407767 [hotstuff info] sent: 1
+2020-03-12 11:27:10.407778 [hotstuff info] recv: 1
+2020-03-12 11:27:10.407788 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:10.407798 [hotstuff info] sent: 17
+2020-03-12 11:27:10.407808 [hotstuff info] recv: 17
+2020-03-12 11:27:10.407818 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:10.407828 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:10.407838 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:10.775243 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:27:11.221872 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:27:17.838718 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:27:20.409306 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:20.409386 [hotstuff info] -------- queues -------
+2020-03-12 11:27:20.409400 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:20.409412 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:20.409423 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:20.409433 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:20.409444 [hotstuff info] fetched: 0
+2020-03-12 11:27:20.409454 [hotstuff info] delivered: 1
+2020-03-12 11:27:20.409482 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:20.409492 [hotstuff info] blk_cache: 2
+2020-03-12 11:27:20.409502 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:20.409511 [hotstuff info] fetched: 0
+2020-03-12 11:27:20.409520 [hotstuff info] delivered: 0
+2020-03-12 11:27:20.409530 [hotstuff info] decided: 0
+2020-03-12 11:27:20.409539 [hotstuff info] gened: 0
+2020-03-12 11:27:20.409548 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:27:20.409561 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:27:20.409572 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:20.409657 [hotstuff info] <NetAddr 127.0.0.1:10000>: 1(1), 1(1), 0
+2020-03-12 11:27:20.409703 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:27:20.409744 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:27:20.409760 [hotstuff info] sent: 3
+2020-03-12 11:27:20.409771 [hotstuff info] recv: 3
+2020-03-12 11:27:20.409780 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:20.409789 [hotstuff info] sent: 20
+2020-03-12 11:27:20.409798 [hotstuff info] recv: 20
+2020-03-12 11:27:20.409808 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:20.409817 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:20.409827 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:30.410563 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:30.410645 [hotstuff info] -------- queues -------
+2020-03-12 11:27:30.410659 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:30.410669 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:30.410680 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:30.410690 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:30.410699 [hotstuff info] fetched: 0
+2020-03-12 11:27:30.410709 [hotstuff info] delivered: 1
+2020-03-12 11:27:30.410719 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:30.410728 [hotstuff info] blk_cache: 2
+2020-03-12 11:27:30.410738 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:30.410747 [hotstuff info] fetched: 0
+2020-03-12 11:27:30.410756 [hotstuff info] delivered: 0
+2020-03-12 11:27:30.410766 [hotstuff info] decided: 0
+2020-03-12 11:27:30.410775 [hotstuff info] gened: 0
+2020-03-12 11:27:30.410785 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:27:30.410798 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:27:30.410809 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:30.410878 [hotstuff info] <NetAddr 127.0.0.1:10000>: 1(1), 1(1), 0
+2020-03-12 11:27:30.410930 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:27:30.410977 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:27:30.410995 [hotstuff info] sent: 2
+2020-03-12 11:27:30.411006 [hotstuff info] recv: 2
+2020-03-12 11:27:30.411015 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:30.411025 [hotstuff info] sent: 22
+2020-03-12 11:27:30.411034 [hotstuff info] recv: 22
+2020-03-12 11:27:30.411044 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:30.411053 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:30.411062 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:35.616676 [hotstuff info] recv size: 34
+
+2020-03-12 11:27:35.616725 [hotstuff info] recv data: 
+
+2020-03-12 11:27:35.616734 [hotstuff info] recv id: 2
+
+2020-03-12 11:27:36.886009 [hotstuff proto] got <proposal rid=0 blk=5b6c859f14>
+2020-03-12 11:27:36.886077 [hotstuff info] ele hash is:58574a574a
+
+2020-03-12 11:27:36.886189 [hotstuff proto] now state: <hotstuff hqc=1e327ff85d hqc.height=1 b_lock=dd46c3eebb b_exec=dd46c3eebb vheight=2 tails=1>
+2020-03-12 11:27:36.886213 [hotstuff info] now return msg size: 1
+
+2020-03-12 11:27:40.411481 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:40.411552 [hotstuff info] -------- queues -------
+2020-03-12 11:27:40.411565 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:40.411576 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:40.411586 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:40.411596 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:40.411624 [hotstuff info] fetched: 0
+2020-03-12 11:27:40.411634 [hotstuff info] delivered: 2
+2020-03-12 11:27:40.411644 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:40.411654 [hotstuff info] blk_cache: 3
+2020-03-12 11:27:40.411663 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:40.411673 [hotstuff info] fetched: 0
+2020-03-12 11:27:40.411682 [hotstuff info] delivered: 1
+2020-03-12 11:27:40.411691 [hotstuff info] decided: 0
+2020-03-12 11:27:40.411701 [hotstuff info] gened: 0
+2020-03-12 11:27:40.411710 [hotstuff info] avg. parent_size: 1.000
+2020-03-12 11:27:40.411722 [hotstuff info] delivery time: 0.001 avg, 0.001 min, 0.001 max
+2020-03-12 11:27:40.411735 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:40.411820 [hotstuff info] <NetAddr 127.0.0.1:10000>: 1(130), 1(315), 0
+2020-03-12 11:27:40.411867 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:27:40.411908 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:27:40.411925 [hotstuff info] sent: 1
+2020-03-12 11:27:40.411935 [hotstuff info] recv: 1
+2020-03-12 11:27:40.411944 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:40.411953 [hotstuff info] sent: 23
+2020-03-12 11:27:40.411963 [hotstuff info] recv: 23
+2020-03-12 11:27:40.411972 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:40.411981 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:40.411991 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:49.086295 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:27:49.538655 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:27:50.411629 [hotstuff info] ===== begin stats =====
+2020-03-12 11:27:50.411700 [hotstuff info] -------- queues -------
+2020-03-12 11:27:50.411714 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:27:50.411726 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:27:50.411736 [hotstuff info] decision_waiting: 0
+2020-03-12 11:27:50.411747 [hotstuff info] -------- misc ---------
+2020-03-12 11:27:50.411757 [hotstuff info] fetched: 0
+2020-03-12 11:27:50.411767 [hotstuff info] delivered: 2
+2020-03-12 11:27:50.411778 [hotstuff info] cmd_cache: 0
+2020-03-12 11:27:50.411788 [hotstuff info] blk_cache: 3
+2020-03-12 11:27:50.411798 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:27:50.411808 [hotstuff info] fetched: 0
+2020-03-12 11:27:50.411818 [hotstuff info] delivered: 0
+2020-03-12 11:27:50.411828 [hotstuff info] decided: 0
+2020-03-12 11:27:50.411838 [hotstuff info] gened: 0
+2020-03-12 11:27:50.411849 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:27:50.411861 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:27:50.411873 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:27:50.411959 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:27:50.412006 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:27:50.412049 [hotstuff info] <NetAddr 127.0.0.1:10003>: 2(2), 2(2), 0
+2020-03-12 11:27:50.412066 [hotstuff info] sent: 3
+2020-03-12 11:27:50.412077 [hotstuff info] recv: 3
+2020-03-12 11:27:50.412087 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:27:50.412097 [hotstuff info] sent: 26
+2020-03-12 11:27:50.412107 [hotstuff info] recv: 26
+2020-03-12 11:27:50.412117 [hotstuff info] ====== end stats ======
+2020-03-12 11:27:50.412127 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:27:50.412138 [hotstuff info] --- end client msg. ---
+2020-03-12 11:27:55.003545 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:28:00.412776 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:00.412852 [hotstuff info] -------- queues -------
+2020-03-12 11:28:00.412866 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:00.412878 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:00.412889 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:00.412900 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:00.412911 [hotstuff info] fetched: 0
+2020-03-12 11:28:00.412942 [hotstuff info] delivered: 2
+2020-03-12 11:28:00.412953 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:00.412963 [hotstuff info] blk_cache: 3
+2020-03-12 11:28:00.412972 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:00.412982 [hotstuff info] fetched: 0
+2020-03-12 11:28:00.412992 [hotstuff info] delivered: 0
+2020-03-12 11:28:00.413002 [hotstuff info] decided: 0
+2020-03-12 11:28:00.413012 [hotstuff info] gened: 0
+2020-03-12 11:28:00.413021 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:28:00.413035 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:00.413046 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:00.413112 [hotstuff info] <NetAddr 127.0.0.1:10000>: 2(2), 2(2), 0
+2020-03-12 11:28:00.413156 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:28:00.413196 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:28:00.413212 [hotstuff info] sent: 3
+2020-03-12 11:28:00.413224 [hotstuff info] recv: 3
+2020-03-12 11:28:00.413233 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:00.413243 [hotstuff info] sent: 29
+2020-03-12 11:28:00.413252 [hotstuff info] recv: 29
+2020-03-12 11:28:00.413262 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:00.413271 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:00.413281 [hotstuff info] --- end client msg. ---
+2020-03-12 11:28:10.422361 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:10.422442 [hotstuff info] -------- queues -------
+2020-03-12 11:28:10.422458 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:10.422470 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:10.422481 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:10.422491 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:10.422500 [hotstuff info] fetched: 0
+2020-03-12 11:28:10.422510 [hotstuff info] delivered: 2
+2020-03-12 11:28:10.422520 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:10.422530 [hotstuff info] blk_cache: 3
+2020-03-12 11:28:10.422540 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:10.422550 [hotstuff info] fetched: 0
+2020-03-12 11:28:10.422559 [hotstuff info] delivered: 0
+2020-03-12 11:28:10.422569 [hotstuff info] decided: 0
+2020-03-12 11:28:10.422579 [hotstuff info] gened: 0
+2020-03-12 11:28:10.422588 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:28:10.422603 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:10.422614 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:10.422704 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:28:10.422748 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:28:10.422786 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:28:10.422800 [hotstuff info] sent: 0
+2020-03-12 11:28:10.422810 [hotstuff info] recv: 0
+2020-03-12 11:28:10.422818 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:10.422827 [hotstuff info] sent: 29
+2020-03-12 11:28:10.422835 [hotstuff info] recv: 29
+2020-03-12 11:28:10.422844 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:10.422853 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:10.422861 [hotstuff info] --- end client msg. ---
+2020-03-12 11:28:20.426416 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:20.426487 [hotstuff info] -------- queues -------
+2020-03-12 11:28:20.426502 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:20.426515 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:20.426526 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:20.426537 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:20.426547 [hotstuff info] fetched: 0
+2020-03-12 11:28:20.426558 [hotstuff info] delivered: 2
+2020-03-12 11:28:20.426568 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:20.426578 [hotstuff info] blk_cache: 3
+2020-03-12 11:28:20.426589 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:20.426599 [hotstuff info] fetched: 0
+2020-03-12 11:28:20.426610 [hotstuff info] delivered: 0
+2020-03-12 11:28:20.426637 [hotstuff info] decided: 0
+2020-03-12 11:28:20.426648 [hotstuff info] gened: 0
+2020-03-12 11:28:20.426659 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:28:20.426673 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:20.426686 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:20.426740 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:28:20.426779 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:28:20.426816 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:28:20.426833 [hotstuff info] sent: 0
+2020-03-12 11:28:20.426845 [hotstuff info] recv: 0
+2020-03-12 11:28:20.426855 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:20.426865 [hotstuff info] sent: 29
+2020-03-12 11:28:20.426875 [hotstuff info] recv: 29
+2020-03-12 11:28:20.426886 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:20.426896 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:20.426907 [hotstuff info] --- end client msg. ---
+2020-03-12 11:28:24.558614 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:28:25.010664 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:28:30.429905 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:30.429983 [hotstuff info] -------- queues -------
+2020-03-12 11:28:30.429999 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:30.430012 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:30.430023 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:30.430035 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:30.430046 [hotstuff info] fetched: 0
+2020-03-12 11:28:30.430057 [hotstuff info] delivered: 2
+2020-03-12 11:28:30.430067 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:30.430078 [hotstuff info] blk_cache: 3
+2020-03-12 11:28:30.430089 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:30.430099 [hotstuff info] fetched: 0
+2020-03-12 11:28:30.430109 [hotstuff info] delivered: 0
+2020-03-12 11:28:30.430119 [hotstuff info] decided: 0
+2020-03-12 11:28:30.430130 [hotstuff info] gened: 0
+2020-03-12 11:28:30.430140 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:28:30.430155 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:30.430168 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:30.430258 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:28:30.430303 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:28:30.430343 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:28:30.430360 [hotstuff info] sent: 2
+2020-03-12 11:28:30.430371 [hotstuff info] recv: 2
+2020-03-12 11:28:30.430382 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:30.430410 [hotstuff info] sent: 31
+2020-03-12 11:28:30.430432 [hotstuff info] recv: 31
+2020-03-12 11:28:30.430444 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:30.430454 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:30.430465 [hotstuff info] --- end client msg. ---
+2020-03-12 11:28:32.706486 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:28:36.900691 [hotstuff info] recv size: 34
+
+2020-03-12 11:28:36.900720 [hotstuff info] recv data: 
+
+2020-03-12 11:28:36.900728 [hotstuff info] recv id: 3
+
+2020-03-12 11:28:38.148901 [hotstuff proto] got <proposal rid=0 blk=7a478b2c17>
+2020-03-12 11:28:38.148956 [hotstuff info] ele hash is:58574a574a
+
+2020-03-12 11:28:38.149032 [hotstuff proto] now state: <hotstuff hqc=5b6c859f14 hqc.height=2 b_lock=1e327ff85d b_exec=dd46c3eebb vheight=3 tails=1>
+2020-03-12 11:28:38.149057 [hotstuff info] now return msg size: 1
+
+2020-03-12 11:28:40.430443 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:40.430513 [hotstuff info] -------- queues -------
+2020-03-12 11:28:40.430526 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:40.430538 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:40.430549 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:40.430578 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:40.430588 [hotstuff info] fetched: 0
+2020-03-12 11:28:40.430599 [hotstuff info] delivered: 3
+2020-03-12 11:28:40.430609 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:40.430620 [hotstuff info] blk_cache: 4
+2020-03-12 11:28:40.430630 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:40.430640 [hotstuff info] fetched: 0
+2020-03-12 11:28:40.430650 [hotstuff info] delivered: 1
+2020-03-12 11:28:40.430661 [hotstuff info] decided: 0
+2020-03-12 11:28:40.430670 [hotstuff info] gened: 0
+2020-03-12 11:28:40.430681 [hotstuff info] avg. parent_size: 1.000
+2020-03-12 11:28:40.430697 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:40.430713 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:40.430779 [hotstuff info] <NetAddr 127.0.0.1:10000>: 3(132), 3(317), 0
+2020-03-12 11:28:40.430822 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:28:40.430861 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:28:40.430876 [hotstuff info] sent: 5
+2020-03-12 11:28:40.430887 [hotstuff info] recv: 5
+2020-03-12 11:28:40.430898 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:40.430907 [hotstuff info] sent: 36
+2020-03-12 11:28:40.430918 [hotstuff info] recv: 36
+2020-03-12 11:28:40.430927 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:40.430938 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:40.430948 [hotstuff info] --- end client msg. ---
+2020-03-12 11:28:50.436025 [hotstuff info] ===== begin stats =====
+2020-03-12 11:28:50.436096 [hotstuff info] -------- queues -------
+2020-03-12 11:28:50.436109 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:28:50.436120 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:28:50.436130 [hotstuff info] decision_waiting: 0
+2020-03-12 11:28:50.436140 [hotstuff info] -------- misc ---------
+2020-03-12 11:28:50.436149 [hotstuff info] fetched: 0
+2020-03-12 11:28:50.436159 [hotstuff info] delivered: 3
+2020-03-12 11:28:50.436168 [hotstuff info] cmd_cache: 0
+2020-03-12 11:28:50.436178 [hotstuff info] blk_cache: 4
+2020-03-12 11:28:50.436188 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:28:50.436197 [hotstuff info] fetched: 0
+2020-03-12 11:28:50.436206 [hotstuff info] delivered: 0
+2020-03-12 11:28:50.436215 [hotstuff info] decided: 0
+2020-03-12 11:28:50.436225 [hotstuff info] gened: 0
+2020-03-12 11:28:50.436234 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:28:50.436247 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:28:50.436259 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:28:50.436350 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:28:50.436392 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:28:50.436432 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:28:50.436446 [hotstuff info] sent: 0
+2020-03-12 11:28:50.436455 [hotstuff info] recv: 0
+2020-03-12 11:28:50.436465 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:28:50.436474 [hotstuff info] sent: 36
+2020-03-12 11:28:50.436483 [hotstuff info] recv: 36
+2020-03-12 11:28:50.436493 [hotstuff info] ====== end stats ======
+2020-03-12 11:28:50.436502 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:28:50.436512 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:00.438405 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:00.438460 [hotstuff info] -------- queues -------
+2020-03-12 11:29:00.438468 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:00.438475 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:00.438481 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:00.438486 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:00.438492 [hotstuff info] fetched: 0
+2020-03-12 11:29:00.438497 [hotstuff info] delivered: 3
+2020-03-12 11:29:00.438503 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:00.438508 [hotstuff info] blk_cache: 4
+2020-03-12 11:29:00.438513 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:00.438518 [hotstuff info] fetched: 0
+2020-03-12 11:29:00.438537 [hotstuff info] delivered: 0
+2020-03-12 11:29:00.438542 [hotstuff info] decided: 0
+2020-03-12 11:29:00.438547 [hotstuff info] gened: 0
+2020-03-12 11:29:00.438551 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:29:00.438559 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:29:00.438565 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:00.438606 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:29:00.438629 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:29:00.438651 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:29:00.438658 [hotstuff info] sent: 0
+2020-03-12 11:29:00.438663 [hotstuff info] recv: 0
+2020-03-12 11:29:00.438668 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:00.438673 [hotstuff info] sent: 36
+2020-03-12 11:29:00.438678 [hotstuff info] recv: 36
+2020-03-12 11:29:00.438682 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:00.438688 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:00.438693 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:08.303607 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:29:08.761231 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:29:10.440909 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:10.440972 [hotstuff info] -------- queues -------
+2020-03-12 11:29:10.440987 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:10.441000 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:10.441011 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:10.441023 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:10.441033 [hotstuff info] fetched: 0
+2020-03-12 11:29:10.441043 [hotstuff info] delivered: 3
+2020-03-12 11:29:10.441054 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:10.441064 [hotstuff info] blk_cache: 4
+2020-03-12 11:29:10.441074 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:10.441084 [hotstuff info] fetched: 0
+2020-03-12 11:29:10.441094 [hotstuff info] delivered: 0
+2020-03-12 11:29:10.441104 [hotstuff info] decided: 0
+2020-03-12 11:29:10.441115 [hotstuff info] gened: 0
+2020-03-12 11:29:10.441125 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:29:10.441139 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:29:10.441168 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:10.441231 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:29:10.441280 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:29:10.441326 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:29:10.441342 [hotstuff info] sent: 2
+2020-03-12 11:29:10.441352 [hotstuff info] recv: 2
+2020-03-12 11:29:10.441363 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:10.441372 [hotstuff info] sent: 38
+2020-03-12 11:29:10.441383 [hotstuff info] recv: 38
+2020-03-12 11:29:10.441393 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:10.441403 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:10.441414 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:12.243231 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:29:20.442328 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:20.442401 [hotstuff info] -------- queues -------
+2020-03-12 11:29:20.442419 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:20.442430 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:20.442441 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:20.442451 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:20.442460 [hotstuff info] fetched: 0
+2020-03-12 11:29:20.442470 [hotstuff info] delivered: 3
+2020-03-12 11:29:20.442480 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:20.442489 [hotstuff info] blk_cache: 4
+2020-03-12 11:29:20.442499 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:20.442509 [hotstuff info] fetched: 0
+2020-03-12 11:29:20.442518 [hotstuff info] delivered: 0
+2020-03-12 11:29:20.442553 [hotstuff info] decided: 0
+2020-03-12 11:29:20.442564 [hotstuff info] gened: 0
+2020-03-12 11:29:20.442574 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:29:20.442596 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:29:20.442608 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:20.442669 [hotstuff info] <NetAddr 127.0.0.1:10000>: 2(2), 2(2), 0
+2020-03-12 11:29:20.442709 [hotstuff info] <NetAddr 127.0.0.1:10001>: 1(1), 1(1), 0
+2020-03-12 11:29:20.442745 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:29:20.442761 [hotstuff info] sent: 4
+2020-03-12 11:29:20.442772 [hotstuff info] recv: 4
+2020-03-12 11:29:20.442781 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:20.442791 [hotstuff info] sent: 42
+2020-03-12 11:29:20.442800 [hotstuff info] recv: 42
+2020-03-12 11:29:20.442810 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:20.442819 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:20.442829 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:30.442440 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:30.442513 [hotstuff info] -------- queues -------
+2020-03-12 11:29:30.442527 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:30.442537 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:30.442548 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:30.442558 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:30.442567 [hotstuff info] fetched: 0
+2020-03-12 11:29:30.442577 [hotstuff info] delivered: 3
+2020-03-12 11:29:30.442587 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:30.442596 [hotstuff info] blk_cache: 4
+2020-03-12 11:29:30.442606 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:30.442615 [hotstuff info] fetched: 0
+2020-03-12 11:29:30.442624 [hotstuff info] delivered: 0
+2020-03-12 11:29:30.442633 [hotstuff info] decided: 0
+2020-03-12 11:29:30.442643 [hotstuff info] gened: 0
+2020-03-12 11:29:30.442652 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:29:30.442664 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:29:30.442676 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:30.442749 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:29:30.442797 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:29:30.442842 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:29:30.442858 [hotstuff info] sent: 0
+2020-03-12 11:29:30.442868 [hotstuff info] recv: 0
+2020-03-12 11:29:30.442878 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:30.442887 [hotstuff info] sent: 42
+2020-03-12 11:29:30.442897 [hotstuff info] recv: 42
+2020-03-12 11:29:30.442906 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:30.442916 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:30.442925 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:38.163398 [hotstuff info] recv size: 34
+
+2020-03-12 11:29:38.163473 [hotstuff info] recv data: 
+
+2020-03-12 11:29:38.163488 [hotstuff info] recv id: 4
+
+2020-03-12 11:29:39.380242 [hotstuff proto] got <proposal rid=0 blk=343b04a28d>
+2020-03-12 11:29:39.380318 [hotstuff info] ele hash is:58574a574a
+
+2020-03-12 11:29:39.380395 [hotstuff proto] commit <block id=1e327ff85d height=1 parent=dd46c3eebb qc_ref=dd46c3eebb>
+2020-03-12 11:29:39.380437 [hotstuff info] replicated <fin decision=1 cmd_idx=0 cmd_height=1 cmd=4a47535a51 blk=1e327ff85d>
+2020-03-12 11:29:39.380485 [hotstuff proto] now state: <hotstuff hqc=7a478b2c17 hqc.height=3 b_lock=5b6c859f14 b_exec=1e327ff85d vheight=4 tails=1>
+2020-03-12 11:29:39.380507 [hotstuff info] now return msg size: 1
+
+2020-03-12 11:29:40.427799 [net info] ping from <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:29:40.442877 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:40.442950 [hotstuff info] -------- queues -------
+2020-03-12 11:29:40.442964 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:40.442976 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:40.443007 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:40.443018 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:40.443028 [hotstuff info] fetched: 0
+2020-03-12 11:29:40.443037 [hotstuff info] delivered: 4
+2020-03-12 11:29:40.443047 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:40.443056 [hotstuff info] blk_cache: 5
+2020-03-12 11:29:40.443066 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:40.443075 [hotstuff info] fetched: 0
+2020-03-12 11:29:40.443084 [hotstuff info] delivered: 1
+2020-03-12 11:29:40.443093 [hotstuff info] decided: 1
+2020-03-12 11:29:40.443103 [hotstuff info] gened: 0
+2020-03-12 11:29:40.443112 [hotstuff info] avg. parent_size: 1.000
+2020-03-12 11:29:40.443126 [hotstuff info] delivery time: 0.001 avg, 0.001 min, 0.001 max
+2020-03-12 11:29:40.443139 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:40.443198 [hotstuff info] <NetAddr 127.0.0.1:10000>: 1(130), 1(315), 0
+2020-03-12 11:29:40.443246 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:29:40.443291 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:29:40.443308 [hotstuff info] sent: 2
+2020-03-12 11:29:40.443318 [hotstuff info] recv: 2
+2020-03-12 11:29:40.443328 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:40.443337 [hotstuff info] sent: 44
+2020-03-12 11:29:40.443347 [hotstuff info] recv: 44
+2020-03-12 11:29:40.443356 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:40.443366 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:40.443375 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:40.885200 [net info] ping from <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:29:50.443205 [hotstuff info] ===== begin stats =====
+2020-03-12 11:29:50.443283 [hotstuff info] -------- queues -------
+2020-03-12 11:29:50.443297 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:29:50.443308 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:29:50.443318 [hotstuff info] decision_waiting: 0
+2020-03-12 11:29:50.443328 [hotstuff info] -------- misc ---------
+2020-03-12 11:29:50.443337 [hotstuff info] fetched: 0
+2020-03-12 11:29:50.443346 [hotstuff info] delivered: 4
+2020-03-12 11:29:50.443356 [hotstuff info] cmd_cache: 0
+2020-03-12 11:29:50.443366 [hotstuff info] blk_cache: 5
+2020-03-12 11:29:50.443375 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:29:50.443385 [hotstuff info] fetched: 0
+2020-03-12 11:29:50.443394 [hotstuff info] delivered: 0
+2020-03-12 11:29:50.443403 [hotstuff info] decided: 0
+2020-03-12 11:29:50.443413 [hotstuff info] gened: 0
+2020-03-12 11:29:50.443422 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:29:50.443434 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:29:50.443445 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:29:50.443528 [hotstuff info] <NetAddr 127.0.0.1:10000>: 0(0), 0(0), 0
+2020-03-12 11:29:50.443579 [hotstuff info] <NetAddr 127.0.0.1:10001>: 2(2), 2(2), 0
+2020-03-12 11:29:50.443627 [hotstuff info] <NetAddr 127.0.0.1:10003>: 1(1), 1(1), 0
+2020-03-12 11:29:50.443644 [hotstuff info] sent: 3
+2020-03-12 11:29:50.443654 [hotstuff info] recv: 3
+2020-03-12 11:29:50.443664 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:29:50.443673 [hotstuff info] sent: 47
+2020-03-12 11:29:50.443682 [hotstuff info] recv: 47
+2020-03-12 11:29:50.443692 [hotstuff info] ====== end stats ======
+2020-03-12 11:29:50.443701 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:29:50.443711 [hotstuff info] --- end client msg. ---
+2020-03-12 11:29:51.347565 [net info] ping from <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:30:00.451668 [hotstuff info] ===== begin stats =====
+2020-03-12 11:30:00.451746 [hotstuff info] -------- queues -------
+2020-03-12 11:30:00.451761 [hotstuff info] blk_fetch_waiting: 0
+2020-03-12 11:30:00.451773 [hotstuff info] blk_delivery_waiting: 0
+2020-03-12 11:30:00.451784 [hotstuff info] decision_waiting: 0
+2020-03-12 11:30:00.451794 [hotstuff info] -------- misc ---------
+2020-03-12 11:30:00.451804 [hotstuff info] fetched: 0
+2020-03-12 11:30:00.451832 [hotstuff info] delivered: 4
+2020-03-12 11:30:00.451842 [hotstuff info] cmd_cache: 0
+2020-03-12 11:30:00.451852 [hotstuff info] blk_cache: 5
+2020-03-12 11:30:00.451862 [hotstuff info] ------ misc (10s) -----
+2020-03-12 11:30:00.451871 [hotstuff info] fetched: 0
+2020-03-12 11:30:00.451880 [hotstuff info] delivered: 0
+2020-03-12 11:30:00.451890 [hotstuff info] decided: 0
+2020-03-12 11:30:00.451899 [hotstuff info] gened: 0
+2020-03-12 11:30:00.451909 [hotstuff info] avg. parent_size: 0.000
+2020-03-12 11:30:00.451921 [hotstuff info] delivery time: 0.000 avg, 0.000 min, 0.000 max
+2020-03-12 11:30:00.451933 [hotstuff info] --- replica msg. (10s) ---
+2020-03-12 11:30:00.452012 [hotstuff info] <NetAddr 127.0.0.1:10000>: 2(2), 2(2), 0
+2020-03-12 11:30:00.452062 [hotstuff info] <NetAddr 127.0.0.1:10001>: 0(0), 0(0), 0
+2020-03-12 11:30:00.452107 [hotstuff info] <NetAddr 127.0.0.1:10003>: 0(0), 0(0), 0
+2020-03-12 11:30:00.452124 [hotstuff info] sent: 2
+2020-03-12 11:30:00.452135 [hotstuff info] recv: 2
+2020-03-12 11:30:00.452145 [hotstuff info] --- replica msg. total ---
+2020-03-12 11:30:00.452155 [hotstuff info] sent: 49
+2020-03-12 11:30:00.452164 [hotstuff info] recv: 49
+2020-03-12 11:30:00.452174 [hotstuff info] ====== end stats ======
+2020-03-12 11:30:00.452183 [hotstuff info] --- client msg. (10s) ---
+2020-03-12 11:30:00.452193 [hotstuff info] --- end client msg. ---
+2020-03-12 11:30:05.788701 [net info] elapsed: 245.418 (wall) 0.058 (cpu)
+2020-03-12 11:30:05.789462 [net info] stopping all threads...
+2020-03-12 11:30:05.790414 [net info] connection lost: <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:30:05.790481 [net info] destroyed <Conn fd=84 addr=<NetAddr 127.0.0.1:10003> mode=active>
+2020-03-12 11:30:05.790868 [net info] stopping all threads...
+2020-03-12 11:30:05.791138 [net info] connection lost: <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:30:05.791181 [net info] destroyed <Conn fd=84 addr=<NetAddr 127.0.0.1:10001> mode=active>
+2020-03-12 11:30:05.791390 [net info] connection lost: <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>
+2020-03-12 11:30:05.791427 [net info] destroyed <Conn fd=84 addr=<NetAddr 127.0.0.1:10000> mode=active>
+2020-03-12 11:30:05.792343 [net info] destroyed <Conn fd=94 addr=<NetAddr 127.0.0.1:58320> mode=passive>
+2020-03-12 11:30:05.792491 [net info] destroyed <Conn fd=92 addr=<NetAddr 127.0.0.1:58312> mode=passive>
+2020-03-12 11:30:05.792609 [net info] destroyed <Conn fd=86 addr=<NetAddr 127.0.0.1:58306> mode=passive>

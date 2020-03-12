@@ -158,6 +158,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
         throw std::runtime_error("empty parents");
     for (const auto &_: parents) tails.erase(_);
     /* create the new block */
+   
     block_t bnew = storage->add_blk(
         new Block(parents, cmds,
             hqc.second->clone(), std::move(extra),
@@ -165,6 +166,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
             hqc.first,
             nullptr
         ));
+    
     const uint256_t bnew_hash = bnew->get_hash();
     bnew->self_qc = create_quorum_cert(bnew_hash);
     on_deliver_blk(bnew);
@@ -180,6 +182,7 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
             create_part_cert(*priv_key, bnew_hash), this));
     on_propose_(prop);
     /* boradcast to other replicas */
+    LOG_INFO("send %s",std::string(prop).c_str());
     do_broadcast_proposal(prop);
     return bnew;
 }
@@ -187,6 +190,21 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
 void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     LOG_PROTO("got %s", std::string(prop).c_str());
     block_t bnew = prop.blk;
+    /*
+    *check blk hash
+    */
+    
+    bool find_target = false;
+    for( const auto& ele : decision_waiting_with_none_client ) {
+        LOG_INFO("ele hash is:%s\n",get_hex10(ele.first).c_str());
+        if(strcmp(get_hex10(ele.first).c_str(),get_hex10(bnew->get_cmds()[0]).c_str())==0){
+            find_target = true;
+        }
+    }
+    /*if(!find_target){
+        LOG_INFO("cannot find_target");
+        return;  
+    }*/ 
     sanity_check_delivered(bnew);
     update(bnew);
     bool opinion = false;
@@ -214,6 +232,10 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     if (bnew->qc_ref)
         on_qc_finish(bnew->qc_ref);
     on_receive_proposal_(prop);
+    uint8_t vote_sendbuf[1];
+    vote_sendbuf[0] = 18;
+    LOG_INFO("now return msg size: %d\n", 1);
+    Coo::send_data(send_port_for_coo, vote_sendbuf, 1);
     if (opinion && !vote_disabled)
         do_vote(prop.proposer,
             Vote(id, bnew->get_hash(),
@@ -227,20 +249,48 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     assert(vote.cert);
     size_t qsize = blk->voted.size();
     if (qsize >= config.nmajority) return;
-    if (!blk->voted.insert(vote.voter).second)
-    {
+    if (!blk->voted.insert(vote.voter).second){
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
         return;
     }
     auto &qc = blk->self_qc;
-    if (qc == nullptr)
-    {
+    if (qc == nullptr){
         LOG_WARN("vote for block not proposed by itself");
         qc = create_quorum_cert(blk->get_hash());
     }
     qc->add_part(vote.voter, *vote.cert);
-    if (qsize + 1 == config.nmajority)
-    {
+    if (qsize + 1 == config.nmajority){
+        /*
+        * send back to Coordinator
+        * i:int idx
+        * qc->sigs[i]->data: uint8_t[64] signeture
+        * query decision_waiting_with_none_client
+        */
+        uint8_t sendbuf[1024*1024];
+        /*uint32_t idx = decision_waiting_with_none_client[qc->get_obj_hash()];
+        sendbuf[0] = (uint8_t)(idx / 256);
+        sendbuf[1] = (uint8_t)(idx % 256);*/
+
+        for(int i = 0; i < 32; i++){
+            sendbuf[i] = std::vector<uint8_t>(qc->get_obj_hash())[i];
+        }
+        int itr = 32;
+        for (size_t i = 0; i < qc->get_rids().size(); i++){
+            if (qc->get_rids().get(i)){
+                uint8_t buff[100];
+                size_t len;
+                sendbuf[itr] = (uint8_t)i;
+                itr ++;
+                LOG_INFO("now return id: %u\n", (uint8_t)i);
+                qc->sigs[i].serialize(buff,len);
+                sendbuf[itr] = (uint8_t)len;
+                itr ++;
+                memcpy(sendbuf + itr, buff, (uint8_t)len);
+                itr += (uint8_t)len;
+            }
+        }
+        LOG_INFO("now return msg size: %d\n",  itr);
+        Coo::send_data(send_port_for_coo, sendbuf, itr);
         qc->compute();
         update_hqc(blk, qc);
         on_qc_finish(blk);

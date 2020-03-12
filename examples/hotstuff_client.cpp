@@ -19,7 +19,7 @@
 #include <random>
 #include <signal.h>
 #include <sys/time.h>
-
+#include <iostream>
 #include "salticidae/type.h"
 #include "salticidae/netaddr.h"
 #include "salticidae/network.h"
@@ -66,8 +66,9 @@ std::vector<std::pair<struct timeval, double>> elapsed;
 Net mn(ec, Net::Config());
 
 void connect_all() {
-    for (size_t i = 0; i < replicas.size(); i++)
+    for (size_t i = 0; i < replicas.size(); i++){
         conns.insert(std::make_pair(i, mn.connect_sync(replicas[i])));
+    }
 }
 
 bool try_send(bool check = true) {
@@ -75,11 +76,15 @@ bool try_send(bool check = true) {
     {
         auto cmd = new CommandDummy(cid, cnt++);
         MsgReqCmd msg(*cmd);
-        for (auto &p: conns) mn.send_msg(msg, p.second);
+        for (auto &p: conns){
+            mn.send_msg(msg, p.second);
 #ifndef HOTSTUFF_ENABLE_BENCHMARK
-        HOTSTUFF_LOG_INFO("send new cmd %.10s",
-                            get_hex(cmd->get_hash()).c_str());
+        HOTSTUFF_LOG_INFO("send new cmd %.10s, %d",
+                            get_hex(cmd->get_hash()).c_str(), p.second);
 #endif
+        } 
+            
+
         waiting.insert(std::make_pair(
             cmd->get_hash(), Request(cmd)));
         if (max_iter_num > 0)
@@ -108,7 +113,9 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     elapsed.push_back(std::make_pair(tv, et.elapsed_sec));
 #endif
     waiting.erase(it);
-    while (try_send());
+    int a;
+        try_send();
+
 }
 
 std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
@@ -165,7 +172,11 @@ int main(int argc, char **argv) {
     nfaulty = (replicas.size() - 1) / 3;
     HOTSTUFF_LOG_INFO("nfaulty = %zu", nfaulty);
     connect_all();
-    while (try_send());
+
+    int a;
+
+        try_send();
+
     ec.dispatch();
 
 #ifdef HOTSTUFF_ENABLE_BENCHMARK

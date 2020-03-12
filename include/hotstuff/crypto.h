@@ -27,7 +27,7 @@
 namespace hotstuff {
 
 using salticidae::SHA256;
-
+class SigSecp256k1;
 class PubKey: public Serializable, Cloneable {
     public:
     virtual ~PubKey() = default;
@@ -56,19 +56,10 @@ class PartCert: public Serializable, public Cloneable {
 
 class ReplicaConfig;
 
-class QuorumCert: public Serializable, public Cloneable {
-    public:
-    virtual ~QuorumCert() = default;
-    virtual void add_part(ReplicaID replica, const PartCert &pc) = 0;
-    virtual void compute() = 0;
-    virtual promise_t verify(const ReplicaConfig &config, VeriPool &vpool) = 0;
-    virtual bool verify(const ReplicaConfig &config) = 0;
-    virtual const uint256_t &get_obj_hash() const = 0;
-    virtual QuorumCert *clone() override = 0;
-};
+
 
 using part_cert_bt = BoxObj<PartCert>;
-using quorum_cert_bt = BoxObj<QuorumCert>;
+
 
 class PubKeyDummy: public PubKey {
     PubKeyDummy *clone() override { return new PubKeyDummy(*this); }
@@ -111,35 +102,7 @@ class PartCertDummy: public PartCert {
     const uint256_t &get_obj_hash() const override { return obj_hash; }
 };
 
-class QuorumCertDummy: public QuorumCert {
-    uint256_t obj_hash;
-    public:
-    QuorumCertDummy() {}
-    QuorumCertDummy(const ReplicaConfig &, const uint256_t &obj_hash):
-        obj_hash(obj_hash) {}
 
-    void serialize(DataStream &s) const override {
-        s << (uint32_t)1 << obj_hash;
-    }
-
-    void unserialize(DataStream &s) override {
-        uint32_t tmp;
-        s >> tmp >> obj_hash;
-    }
-
-    QuorumCert *clone() override {
-        return new QuorumCertDummy(*this);
-    }
-
-    void add_part(ReplicaID, const PartCert &) override {}
-    void compute() override {}
-    bool verify(const ReplicaConfig &) override { return true; }
-    promise_t verify(const ReplicaConfig &, VeriPool &) override {
-        return promise_t([](promise_t &pm) { pm.resolve(true); });
-    }
-
-    const uint256_t &get_obj_hash() const override { return obj_hash; }
-};
 
 
 class Secp256k1Context {
@@ -198,7 +161,11 @@ class PubKeySecp256k1: public PubKey {
                 &olen, &data, SECP256K1_EC_COMPRESSED);
         s.put_data(output, output + _olen);
     }
-
+    void serialize(uint8_t *ser, size_t& len){
+        (void)secp256k1_ec_pubkey_serialize(
+                ctx->ctx, ser,
+                &len, &data, SECP256K1_EC_COMPRESSED);
+    }
     void unserialize(DataStream &s) override {
         static const auto _exc = std::invalid_argument("ill-formed public key");
         try {
@@ -265,7 +232,7 @@ PubKeySecp256k1::PubKeySecp256k1(
 }
 
 class SigSecp256k1: public Serializable {
-    secp256k1_ecdsa_signature data;
+    
     secp256k1_context_t ctx;
 
     static void check_msg_length(const bytearray_t &msg) {
@@ -274,6 +241,7 @@ class SigSecp256k1: public Serializable {
     }
 
     public:
+    secp256k1_ecdsa_signature data;
     SigSecp256k1(const secp256k1_context_t &ctx =
                         secp256k1_default_sign_ctx):
         Serializable(), ctx(ctx) {}
@@ -292,7 +260,9 @@ class SigSecp256k1: public Serializable {
             &data);
         s.put_data(output, output + 64);
     }
-
+    void serialize(uint8_t* ser, size_t &len){
+        (void)secp256k1_ecdsa_signature_serialize_der(ctx->ctx, ser, &len, &data);
+    }
     void unserialize(DataStream &s) override {
         static const auto _exc = std::invalid_argument("ill-formed signature");
         try {
@@ -328,7 +298,49 @@ class SigSecp256k1: public Serializable {
         return verify(msg, pub_key, ctx);
     }
 };
+class QuorumCert: public Serializable, public Cloneable {
+    public:
+    std::unordered_map<ReplicaID, SigSecp256k1> sigs;
+    virtual ~QuorumCert() = default;
+    virtual void add_part(ReplicaID replica, const PartCert &pc) = 0;
+    virtual void compute() = 0;
+    virtual promise_t verify(const ReplicaConfig &config, VeriPool &vpool) = 0;
+    virtual bool verify(const ReplicaConfig &config) = 0;
+    virtual const salticidae::Bits &get_rids() const = 0;
+    virtual const uint256_t &get_obj_hash() const = 0;
+    virtual QuorumCert *clone() override = 0;
+};
+using quorum_cert_bt = BoxObj<QuorumCert>;
+class QuorumCertDummy: public QuorumCert {
+    uint256_t obj_hash;
+    salticidae::Bits rids;
+    public:
+    QuorumCertDummy() {}
+    QuorumCertDummy(const ReplicaConfig &, const uint256_t &obj_hash):
+        obj_hash(obj_hash) {}
 
+    void serialize(DataStream &s) const override {
+        s << (uint32_t)1 << obj_hash;
+    }
+
+    void unserialize(DataStream &s) override {
+        uint32_t tmp;
+        s >> tmp >> obj_hash;
+    }
+
+    QuorumCert *clone() override {
+        return new QuorumCertDummy(*this);
+    }
+
+    void add_part(ReplicaID, const PartCert &) override {}
+    void compute() override {}
+    bool verify(const ReplicaConfig &) override { return true; }
+    promise_t verify(const ReplicaConfig &, VeriPool &) override {
+        return promise_t([](promise_t &pm) { pm.resolve(true); });
+    }
+    const salticidae::Bits &get_rids() const override { return rids; }
+    const uint256_t &get_obj_hash() const override { return obj_hash; }
+};
 class Secp256k1VeriTask: public VeriTask {
     uint256_t msg;
     PubKeySecp256k1 pubkey;
@@ -387,9 +399,8 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
 class QuorumCertSecp256k1: public QuorumCert {
     uint256_t obj_hash;
     salticidae::Bits rids;
-    std::unordered_map<ReplicaID, SigSecp256k1> sigs;
-
     public:
+    
     QuorumCertSecp256k1() = default;
     QuorumCertSecp256k1(const ReplicaConfig &config, const uint256_t &obj_hash);
 
@@ -407,6 +418,7 @@ class QuorumCertSecp256k1: public QuorumCert {
     promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
 
     const uint256_t &get_obj_hash() const override { return obj_hash; }
+    const salticidae::Bits &get_rids() const override { return rids; }
 
     QuorumCertSecp256k1 *clone() override {
         return new QuorumCertSecp256k1(*this);

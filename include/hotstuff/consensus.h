@@ -26,7 +26,7 @@
 #include "hotstuff/type.h"
 #include "hotstuff/entity.h"
 #include "hotstuff/crypto.h"
-
+#include "IOTA_communication/Coo.h"
 namespace hotstuff {
 
 struct Proposal;
@@ -63,13 +63,15 @@ class HotStuffCore {
     void on_qc_finish(const block_t &blk);
     void on_propose_(const Proposal &prop);
     void on_receive_proposal_(const Proposal &prop);
-
+    
     protected:
     ReplicaID id;                  /**< identity of the replica itself */
 
     public:
+    int listen_port_for_coo;
+    int send_port_for_coo;
     BoxObj<EntityStorage> storage;
-
+    std::unordered_map<const uint256_t, uint32_t> decision_waiting_with_none_client;
     HotStuffCore(ReplicaID id, privkey_bt &&priv_key);
     virtual ~HotStuffCore() {
         b0->qc_ref = nullptr;
@@ -113,6 +115,7 @@ class HotStuffCore {
      * functions should be implemented by the user to specify the behavior upon
      * the events. */
     protected:
+
     /** Called by HotStuffCore upon the decision being made for cmd. */
     virtual void do_decide(Finality &&fin) = 0;
     virtual void do_consensus(const block_t &blk) = 0;

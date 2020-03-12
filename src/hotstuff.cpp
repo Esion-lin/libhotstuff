@@ -399,6 +399,7 @@ void HotStuffBase::start(
     for (size_t i = 0; i < replicas.size(); i++)
     {
         auto &addr = std::get<0>(replicas[i]);
+        
         HotStuffCore::add_replica(i, addr, std::move(std::get<1>(replicas[i])));
         valid_tls_certs.insert(std::move(std::get<2>(replicas[i])));
         if (addr != listen_addr)
@@ -407,7 +408,8 @@ void HotStuffBase::start(
             pn.add_peer(addr);
         }
     }
-
+    
+    
     /* ((n - 1) + 1 - 1) / 3 */
     uint32_t nfaulty = peers.size() / 3;
     if (nfaulty == 0)
@@ -417,7 +419,62 @@ void HotStuffBase::start(
     if (ec_loop)
         ec.dispatch();
 
-    cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
+    /**
+    * different from orgin:
+    * one to one pair of client and server 
+    * so do not need pair with commit_cb_t
+    * TODO: 1. to erase what is decided
+    *       2. to solve the problem that node can't find cmd_hash in decision_waiting_with_none_client because of asyschronize
+    **/
+    auto deal_fun = [this](unsigned int milestone_id, uint8_t * hash){
+        std::pair<uint256_t, uint32_t> e_cb;
+        ReplicaID proposer = pmaker->get_proposer();
+        e_cb.first.load(hash);
+        e_cb.second = milestone_id;
+        const auto cmd_hash = e_cb.first;
+        auto it = decision_waiting_with_none_client.find(cmd_hash);
+        if (it == decision_waiting_with_none_client.end()){
+            it = decision_waiting_with_none_client.insert(std::make_pair(cmd_hash, e_cb.second)).first;
+        }
+        /*else{
+            
+            send back
+            //e.second(Finality(id, 0, 0, 0, cmd_hash, uint256_t()));
+            
+            HOTSTUFF_LOG_INFO("success consensus of: %s\n", hash);
+        }  */ 
+        if (proposer != get_id()) return;
+        cmd_pending_buffer.push(cmd_hash);
+        sleep(1);
+        std::vector<uint256_t> cmds;
+        cmds.push_back(cmd_hash);
+        pmaker->beat().then([this, cmds = std::move(cmds)](ReplicaID proposer) {
+            if (proposer == get_id())
+                on_propose(cmds, pmaker->get_parents());
+        });
+        return;
+        /*if (cmd_pending_buffer.size() >= blk_size)
+        {
+            std::vector<uint256_t> cmds;
+            for (uint32_t i = 0; i < blk_size; i++)
+            {
+                cmds.push_back(cmd_pending_buffer.front());
+                cmd_pending_buffer.pop();
+            }
+            pmaker->beat().then([this, cmds = std::move(cmds)](ReplicaID proposer) {
+                if (proposer == get_id())
+                    on_propose(cmds, pmaker->get_parents());
+            });
+            return;
+        }*/
+    };
+    coo = new Coo(deal_fun, listen_port_for_coo);
+    
+    /*if(pthread_create(&coo_tid , NULL , coo.init_listen, (void *)&deal_fun)== -1){
+        LOG_INFO("pthread create error.\n");
+        exit(1);
+    }*/
+    /*cmd_pending.reg_handler(ec, [this](cmd_queue_t &q) {
         std::pair<uint256_t, commit_cb_t> e;
         while (q.try_dequeue(e))
         {
@@ -447,7 +504,7 @@ void HotStuffBase::start(
             }
         }
         return false;
-    });
+    });*/
 }
 
 }

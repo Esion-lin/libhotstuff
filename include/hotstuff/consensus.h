@@ -73,6 +73,7 @@ class HotStuffCore {
     BoxObj<EntityStorage> storage;
     std::unordered_map<const uint256_t, uint32_t> decision_waiting_with_none_client;
     HotStuffCore(ReplicaID id, privkey_bt &&priv_key);
+    const auto &get_decision_waiting_with_none_client() const { return decision_waiting_with_none_client; }
     virtual ~HotStuffCore() {
         b0->qc_ref = nullptr;
     }

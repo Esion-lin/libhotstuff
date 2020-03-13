@@ -262,7 +262,7 @@ void HotStuffBase::print_stat() const {
     LOG_INFO("-------- queues -------");
     LOG_INFO("blk_fetch_waiting: %lu", blk_fetch_waiting.size());
     LOG_INFO("blk_delivery_waiting: %lu", blk_delivery_waiting.size());
-    LOG_INFO("decision_waiting: %lu", decision_waiting.size());
+    LOG_INFO("decision_waiting: %lu", decision_waiting_with_none_client.size());
     LOG_INFO("-------- misc ---------");
     LOG_INFO("fetched: %lu", fetched);
     LOG_INFO("delivered: %lu", delivered);
@@ -383,11 +383,10 @@ void HotStuffBase::do_consensus(const block_t &blk) {
 void HotStuffBase::do_decide(Finality &&fin) {
     part_decided++;
     state_machine_execute(fin);
-    auto it = decision_waiting.find(fin.cmd_hash);
-    if (it != decision_waiting.end())
+    auto it = decision_waiting_with_none_client.find(fin.cmd_hash);
+    if (it != decision_waiting_with_none_client.end())
     {
-        it->second(std::move(fin));
-        decision_waiting.erase(it);
+        decision_waiting_with_none_client.erase(it);
     }
 }
 

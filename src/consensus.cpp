@@ -194,13 +194,13 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     *check blk hash
     */
     
-    bool find_target = false;
+    /*bool find_target = false;
     for( const auto& ele : decision_waiting_with_none_client ) {
         LOG_INFO("ele hash is:%s\n",get_hex10(ele.first).c_str());
         if(strcmp(get_hex10(ele.first).c_str(),get_hex10(bnew->get_cmds()[0]).c_str())==0){
             find_target = true;
         }
-    }
+    }*/
     /*if(!find_target){
         LOG_INFO("cannot find_target");
         return;  

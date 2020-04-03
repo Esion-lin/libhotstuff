@@ -144,7 +144,7 @@ class HotStuffBase: public HotStuffCore {
     std::vector<NetAddr> peers;
     /** communication with coordinator **/
     
-    Coo *coo;
+    
     
     private:
     /** whether libevent handle is owned by itself */

@@ -27,7 +27,11 @@ public:
 	static void *init_listen(void *deal);
 	//default host "127.0.0.1"
 	static bool send_data(int port, uint8_t* data, int length);
+	bool listen_on_iri(int port);
+	static bool listening_iri(bool& ans);
 private:
+	static int listen_fd_iri;
+	static struct sockaddr_in  server_sockaddr_iri, client_addr_iri;
 	static int listen_port;
 	static int conn_fd;
 	deal_cb fun_deal;

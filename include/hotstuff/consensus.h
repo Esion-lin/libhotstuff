@@ -70,6 +70,10 @@ class HotStuffCore {
     public:
     int listen_port_for_coo;
     int send_port_for_coo;
+    int listen_port_for_iri;
+    int send_port_for_iri;
+    Coo *coo;
+    bool check_cmds(std::vector<uint256_t> cmds);
     BoxObj<EntityStorage> storage;
     std::unordered_map<const uint256_t, uint32_t> decision_waiting_with_none_client;
     HotStuffCore(ReplicaID id, privkey_bt &&priv_key);
@@ -249,14 +253,14 @@ struct Vote: public Serializable {
 
     bool verify() const {
         assert(hsc != nullptr);
-        return cert->verify(hsc->get_config().get_pubkey(voter)) &&
-                cert->get_obj_hash() == blk_hash;
+        return cert->verify(hsc->get_config().get_pubkey(voter))/* &&
+                cert->get_obj_hash() == blk_hash*/;
     }
 
     promise_t verify(VeriPool &vpool) const {
         assert(hsc != nullptr);
         return cert->verify(hsc->get_config().get_pubkey(voter), vpool).then([this](bool result) {
-            return result && cert->get_obj_hash() == blk_hash;
+            return result/* && cert->get_obj_hash() == blk_hash*/;
         });
     }
 

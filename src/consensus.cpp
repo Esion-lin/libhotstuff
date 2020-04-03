@@ -69,7 +69,7 @@ bool HotStuffCore::on_deliver_blk(const block_t &blk) {
 
     if (blk->qc)
     {
-        block_t _blk = storage->find_blk(blk->qc->get_obj_hash());
+        block_t _blk = storage->find_blk(blk->get_cmds().size()?blk->get_hash():blk->qc->get_obj_hash());
         if (_blk == nullptr)
             throw std::runtime_error("block referred by qc not fetched");
         blk->qc_ref = std::move(_blk);
@@ -167,18 +167,19 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
             nullptr
         ));
     
-    const uint256_t bnew_hash = bnew->get_hash();
+    //const uint256_t bnew_hash = bnew->get_hash();
+    const uint256_t bnew_hash = bnew->get_cmds().size()?bnew->get_cmds()[0]:bnew->get_hash();
     bnew->self_qc = create_quorum_cert(bnew_hash);
     on_deliver_blk(bnew);
     update(bnew);
     Proposal prop(id, bnew, nullptr);
     LOG_PROTO("propose %s", std::string(*bnew).c_str());
     /* self-vote */
-    if (bnew->height <= vheight)
-        throw std::runtime_error("new block should be higher than vheight");
+    /*if (bnew->height <= vheight)
+        throw std::runtime_error("new block should be higher than vheight");*/
     vheight = bnew->height;
     on_receive_vote(
-        Vote(id, bnew_hash,
+        Vote(id, bnew->get_hash(),
             create_part_cert(*priv_key, bnew_hash), this));
     on_propose_(prop);
     /* boradcast to other replicas */
@@ -186,7 +187,31 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
     do_broadcast_proposal(prop);
     return bnew;
 }
+bool HotStuffCore::check_cmds(std::vector<uint256_t> cmds){
+    uint8_t milestone_sendbuf[162];
+    for(int i = 0; i < cmds.size(); i++){
 
+        bytearray_t arr_cmd = cmds[i].to_bytes();
+        LOG_INFO("cmds %d : %s , leng : %d", i, get_hex10(cmds[i]).c_str(), arr_cmd.size());
+        if(i == 5){
+            milestone_sendbuf[i*32 + 0] = arr_cmd[0];
+            milestone_sendbuf[i*32 + 1] = arr_cmd[1];
+            continue;
+        }
+        for(int j = 0; j < arr_cmd.size(); j++){
+            milestone_sendbuf[i*32 + j] = arr_cmd[j];
+        }
+            
+    }
+    bool is_cmds_legal = false;
+    Coo::send_data(send_port_for_iri, milestone_sendbuf, 162); 
+    if(Coo::listening_iri(is_cmds_legal)){
+        if(is_cmds_legal){
+            return true;
+        }
+    }
+    return false;
+}
 void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     LOG_PROTO("got %s", std::string(prop).c_str());
     block_t bnew = prop.blk;
@@ -232,14 +257,27 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     if (bnew->qc_ref)
         on_qc_finish(bnew->qc_ref);
     on_receive_proposal_(prop);
-    uint8_t vote_sendbuf[1];
-    vote_sendbuf[0] = 18;
-    LOG_INFO("now return msg size: %d\n", 1);
-    Coo::send_data(send_port_for_coo, vote_sendbuf, 1);
-    if (opinion && !vote_disabled)
-        do_vote(prop.proposer,
-            Vote(id, bnew->get_hash(),
-                create_part_cert(*priv_key, bnew->get_hash()), this));
+    if(decision_waiting_with_none_client.size()&&bnew->get_cmds().size()){
+        uint8_t vote_sendbuf[1];
+        vote_sendbuf[0] = 18;
+        LOG_INFO("now return msg size: %d\n", 1);
+        decision_waiting_with_none_client.clear();
+        Coo::send_data(send_port_for_coo, vote_sendbuf, 1);    
+    }
+    if (opinion && !vote_disabled){
+        if(bnew->get_cmds().size()){
+            if(check_cmds(bnew->get_cmds())){
+                do_vote(prop.proposer,
+                    Vote(id, bnew->get_hash(),
+                        create_part_cert(*priv_key, bnew->get_cmds()[0]), this));
+            }
+        }else{
+            do_vote(prop.proposer,
+                Vote(id, bnew->get_hash(),
+                    create_part_cert(*priv_key, bnew->get_hash()), this));
+        }
+        
+    }
 }
 
 void HotStuffCore::on_receive_vote(const Vote &vote) {
@@ -256,7 +294,12 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     auto &qc = blk->self_qc;
     if (qc == nullptr){
         LOG_WARN("vote for block not proposed by itself");
-        qc = create_quorum_cert(blk->get_hash());
+        if(blk->get_cmds().size()){
+            qc = create_quorum_cert(blk->get_cmds()[0]);    
+        }else{
+            qc = create_quorum_cert(blk->get_hash());    
+        }
+        
     }
     qc->add_part(vote.voter, *vote.cert);
     if (qsize + 1 == config.nmajority){
@@ -266,31 +309,37 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         * qc->sigs[i]->data: uint8_t[64] signeture
         * query decision_waiting_with_none_client
         */
-        uint8_t sendbuf[1024*1024];
-        /*uint32_t idx = decision_waiting_with_none_client[qc->get_obj_hash()];
-        sendbuf[0] = (uint8_t)(idx / 256);
-        sendbuf[1] = (uint8_t)(idx % 256);*/
+        if(decision_waiting_with_none_client.size()&&blk->get_cmds().size()){
+            if(decision_waiting_with_none_client.find(blk->get_cmds()[0]) != decision_waiting_with_none_client.end()){
+                uint8_t sendbuf[1024*1024];
+                /*uint32_t idx = decision_waiting_with_none_client[qc->get_obj_hash()];
+                sendbuf[0] = (uint8_t)(idx / 256);
+                sendbuf[1] = (uint8_t)(idx % 256);*/
 
-        for(int i = 0; i < 32; i++){
-            sendbuf[i] = std::vector<uint8_t>(qc->get_obj_hash())[i];
-        }
-        int itr = 32;
-        for (size_t i = 0; i < qc->get_rids().size(); i++){
-            if (qc->get_rids().get(i)){
-                uint8_t buff[100];
-                size_t len;
-                sendbuf[itr] = (uint8_t)i;
-                itr ++;
-                LOG_INFO("now return id: %u\n", (uint8_t)i);
-                qc->sigs[i].serialize(buff,len);
-                sendbuf[itr] = (uint8_t)len;
-                itr ++;
-                memcpy(sendbuf + itr, buff, (uint8_t)len);
-                itr += (uint8_t)len;
+                for(int i = 0; i < 32; i++){
+                    sendbuf[i] = std::vector<uint8_t>(qc->get_obj_hash())[i];
+                }
+                int itr = 32;
+                for (size_t i = 0; i < qc->get_rids().size(); i++){
+                    if (qc->get_rids().get(i)){
+                        uint8_t buff[100];
+                        size_t len;
+                        sendbuf[itr] = (uint8_t)i;
+                        itr ++;
+                        LOG_INFO("now return id: %u\n", (uint8_t)i);
+                        qc->sigs[i].serialize(buff,len);
+                        sendbuf[itr] = (uint8_t)len;
+                        itr ++;
+                        memcpy(sendbuf + itr, buff, (uint8_t)len);
+                        itr += (uint8_t)len;
+                    }
+                }
+                LOG_INFO("now return msg size: %d\n",  itr);
+                Coo::send_data(send_port_for_coo, sendbuf, itr);
             }
+            
         }
-        LOG_INFO("now return msg size: %d\n",  itr);
-        Coo::send_data(send_port_for_coo, sendbuf, itr);
+        
         qc->compute();
         update_hqc(blk, qc);
         on_qc_finish(blk);
@@ -299,7 +348,12 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
 /*** end HotStuff protocol logic ***/
 void HotStuffCore::on_init(uint32_t nfaulty) {
     config.nmajority = config.nreplicas - nfaulty;
-    b0->qc = create_quorum_cert(b0->get_hash());
+    if(b0->get_cmds().size()){
+        b0->qc = create_quorum_cert(b0->get_cmds()[0]/*b0->get_hash()*/);    
+    }else{
+        b0->qc = create_quorum_cert(b0->get_hash());
+    }
+    
     b0->qc->compute();
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;

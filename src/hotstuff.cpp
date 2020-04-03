@@ -178,8 +178,14 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
         /* qc_ref should be fetched */
         std::vector<promise_t> pms;
         const auto &qc = blk->get_qc();
-        if (qc)
-            pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica_id));
+        if (qc){
+            if(blk->get_cmds().size()){
+                pms.push_back(async_fetch_blk(blk->get_hash(), &replica_id));    
+            }else{
+                pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica_id));
+            }
+            
+        }
         /* the parents should be delivered */
         for (const auto &phash: blk->get_parent_hashes())
             pms.push_back(async_deliver_blk(phash, replica_id));
@@ -251,7 +257,7 @@ bool HotStuffBase::conn_handler(const salticidae::ConnPool::conn_t &conn, bool c
     if (connected)
     {
         auto cert = conn->get_peer_cert();
-        //SALTICIDAE_LOG_INFO("%s", salticidae::get_hash(cert->get_der()).to_hex().c_str());
+        SALTICIDAE_LOG_INFO("%s", salticidae::get_hash(cert->get_der()).to_hex().c_str());
         return (!cert) || valid_tls_certs.count(salticidae::get_hash(cert->get_der()));
     }
     return true;
@@ -383,11 +389,13 @@ void HotStuffBase::do_consensus(const block_t &blk) {
 void HotStuffBase::do_decide(Finality &&fin) {
     part_decided++;
     state_machine_execute(fin);
-    auto it = decision_waiting_with_none_client.find(fin.cmd_hash);
+    decision_waiting_with_none_client.clear();
+    LOG_INFO("clean decision");
+    /*auto it = decision_waiting_with_none_client.find(fin.cmd_hash);
     if (it != decision_waiting_with_none_client.end())
     {
         decision_waiting_with_none_client.erase(it);
-    }
+    }*/
 }
 
 HotStuffBase::~HotStuffBase() {}
@@ -446,7 +454,12 @@ void HotStuffBase::start(
         cmd_pending_buffer.push(cmd_hash);
         sleep(1);
         std::vector<uint256_t> cmds;
-        cmds.push_back(cmd_hash);
+        for(int i = 0; i < 6; i++){
+            uint256_t tmp;
+            tmp.load(hash+i*32);
+            cmds.push_back(tmp);    
+        }
+        
         pmaker->beat().then([this, cmds = std::move(cmds)](ReplicaID proposer) {
             if (proposer == get_id())
                 on_propose(cmds, pmaker->get_parents());
@@ -468,7 +481,7 @@ void HotStuffBase::start(
         }*/
     };
     coo = new Coo(deal_fun, listen_port_for_coo);
-    
+    coo->listen_on_iri(listen_port_for_iri);
     /*if(pthread_create(&coo_tid , NULL , coo.init_listen, (void *)&deal_fun)== -1){
         LOG_INFO("pthread create error.\n");
         exit(1);

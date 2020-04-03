@@ -69,30 +69,17 @@ class HotStuffApp: public HotStuff {
     double stat_period;
     double impeach_timeout;
     EventContext ec;
-    EventContext req_ec;
-    EventContext resp_ec;
-    /** Network messaging between a replica and its client. */
-    ClientNetwork<opcode_t> cn;
+
     /** Timer object to schedule a periodic printing of system statistics */
     TimerEvent ev_stat_timer;
     /** Timer object to monitor the progress for simple impeachment */
     TimerEvent impeach_timer;
     /** The listen address for client RPC */
-    NetAddr clisten_addr;
 
     std::unordered_map<const uint256_t, promise_t> unconfirmed;
-
-    using conn_t = ClientNetwork<opcode_t>::conn_t;
-    using resp_queue_t = salticidae::MPSCQueueEventDriven<std::pair<Finality, NetAddr>>;
+   
 
     /* for the dedicated thread sending responses to the clients */
-    std::thread req_thread;
-    std::thread resp_thread;
-    resp_queue_t resp_queue;
-    salticidae::BoxObj<salticidae::ThreadCall> resp_tcall;
-    salticidae::BoxObj<salticidae::ThreadCall> req_tcall;
-
-    void client_request_cmd_handler(MsgReqCmd &&, const conn_t &);
 
     static command_t parse_cmd(DataStream &s) {
         auto cmd = new CommandDummy();
@@ -112,10 +99,6 @@ class HotStuffApp: public HotStuff {
 #endif
     }
 
-#ifdef HOTSTUFF_MSG_STAT
-    std::unordered_set<conn_t> client_conns;
-    void print_stat() const;
-#endif
 
     public:
     HotStuffApp(uint32_t blk_size,
@@ -150,7 +133,7 @@ int main(int argc, char **argv) {
     ElapsedTime elapsed;
     elapsed.start();
 
-    auto opt_blk_size = Config::OptValInt::create(1);
+    auto opt_blk_size = Config::OptValInt::create(6);
     auto opt_parent_limit = Config::OptValInt::create(-1);
     auto opt_stat_period = Config::OptValDouble::create(10);
     auto opt_replicas = Config::OptValStrVec::create();
@@ -160,6 +143,8 @@ int main(int argc, char **argv) {
     auto opt_tls_privkey = Config::OptValStr::create();
     auto opt_coo_listen_port = Config::OptValInt::create(10060);
     auto opt_coo_send_port = Config::OptValInt::create(10000);
+    auto opt_iri_listen_port = Config::OptValInt::create(15260);
+    auto opt_iri_send_port = Config::OptValInt::create(13260);
     auto opt_tls_cert = Config::OptValStr::create();
     auto opt_help = Config::OptValFlag::create(false);
     auto opt_pace_maker = Config::OptValStr::create("dummy");
@@ -182,6 +167,8 @@ int main(int argc, char **argv) {
     config.add_opt("cport", opt_client_port, Config::SET_VAL, 'c', "specify the port listening for clients");
     config.add_opt("coo_listen_port", opt_coo_listen_port, Config::SET_VAL);
     config.add_opt("coo_send_port", opt_coo_send_port, Config::SET_VAL);
+    config.add_opt("iri_listen_port", opt_iri_listen_port, Config::SET_VAL);
+    config.add_opt("iri_send_port", opt_iri_send_port, Config::SET_VAL);
     config.add_opt("privkey", opt_privkey, Config::SET_VAL);
     config.add_opt("tls-privkey", opt_tls_privkey, Config::SET_VAL);
     config.add_opt("tls-cert", opt_tls_cert, Config::SET_VAL);
@@ -274,6 +261,8 @@ int main(int argc, char **argv) {
                         clinet_config);
     papp->listen_port_for_coo = opt_coo_listen_port.get()->get();
     papp->send_port_for_coo = opt_coo_send_port.get()->get();
+    papp->listen_port_for_iri = opt_iri_listen_port.get()->get();
+    papp->send_port_for_iri = opt_iri_send_port.get()->get();
     HOTSTUFF_LOG_INFO("opt_coo_listen_port is %d\n", opt_coo_listen_port.get()->get());
     std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
     for (auto &r: replicas)
@@ -311,52 +300,20 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
             plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
     stat_period(stat_period),
     impeach_timeout(impeach_timeout),
-    ec(ec),
-    cn(req_ec, clinet_config),
-    clisten_addr(clisten_addr) {
-    /* prepare the thread used for sending back confirmations */
-    resp_tcall = new salticidae::ThreadCall(resp_ec);
-    req_tcall = new salticidae::ThreadCall(req_ec);
-    resp_queue.reg_handler(resp_ec, [this](resp_queue_t &q) {
-        std::pair<Finality, NetAddr> p;
-        while (q.try_dequeue(p))
-        {
-            try {
-                cn.send_msg(MsgRespCmd(std::move(p.first)), p.second);
-            } catch (std::exception &err) {
-                HOTSTUFF_LOG_WARN("unable to send to the client: %s", err.what());
-            }
-        }
-        return false;
-    });
+    ec(ec){
 
-    /* register the handlers for msg from clients */
-    cn.reg_handler(salticidae::generic_bind(&HotStuffApp::client_request_cmd_handler, this, _1, _2));
-    cn.start();
-    cn.listen(clisten_addr);
 }
 
-void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn) {
-    const NetAddr addr = conn->get_addr();
-    auto cmd = parse_cmd(msg.serialized);
-    const auto &cmd_hash = cmd->get_hash();
-    HOTSTUFF_LOG_INFO("processing %s", std::string(*cmd).c_str());
-    exec_command(cmd_hash, [this, addr](Finality fin) {
-        resp_queue.enqueue(std::make_pair(fin, addr));
-    });
-}
 
 void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps) {
     ev_stat_timer = TimerEvent(ec, [this](TimerEvent &) {
         HotStuff::print_stat();
-        HotStuffApp::print_stat();
         //HotStuffCore::prune(100);
         ev_stat_timer.add(stat_period);
     });
     ev_stat_timer.add(stat_period);
     impeach_timer = TimerEvent(ec, [this](TimerEvent &) {
-        if (get_decision_waiting_with_none_client().size())
-            get_pace_maker()->impeach();
+        get_pace_maker()->impeach();
         reset_imp_timer();
     });
     impeach_timer.add(impeach_timeout);
@@ -365,51 +322,11 @@ void HotStuffApp::start(const std::vector<std::tuple<NetAddr, bytearray_t, bytea
     HOTSTUFF_LOG_INFO("conns = %lu", HotStuff::size());
     HOTSTUFF_LOG_INFO("** starting the event loop...");
     HotStuff::start(reps);
-    cn.reg_conn_handler([this](const salticidae::ConnPool::conn_t &_conn, bool connected) {
-        auto conn = salticidae::static_pointer_cast<conn_t::type>(_conn);
-        if (connected)
-            client_conns.insert(conn);
-        else
-            client_conns.erase(conn);
-        return true;
-    });
-    req_thread = std::thread([this]() { req_ec.dispatch(); });
-    resp_thread = std::thread([this]() { resp_ec.dispatch(); });
-    /* enter the event main loop */
+   
     ec.dispatch();
 }
 
 void HotStuffApp::stop() {
-    papp->req_tcall->async_call([this](salticidae::ThreadCall::Handle &) {
-        req_ec.stop();
-    });
-    papp->resp_tcall->async_call([this](salticidae::ThreadCall::Handle &) {
-        resp_ec.stop();
-    });
-
-    req_thread.join();
-    resp_thread.join();
     ec.stop();
 }
 
-void HotStuffApp::print_stat() const {
-#ifdef HOTSTUFF_MSG_STAT
-    HOTSTUFF_LOG_INFO("--- client msg. (10s) ---");
-    size_t _nsent = 0;
-    size_t _nrecv = 0;
-    for (const auto &conn: client_conns)
-    {
-        if (conn == nullptr) continue;
-        size_t ns = conn->get_nsent();
-        size_t nr = conn->get_nrecv();
-        size_t nsb = conn->get_nsentb();
-        size_t nrb = conn->get_nrecvb();
-        conn->clear_msgstat();
-        HOTSTUFF_LOG_INFO("%s: %u(%u), %u(%u)",
-            std::string(conn->get_addr()).c_str(), ns, nsb, nr, nrb);
-        _nsent += ns;
-        _nrecv += nr;
-    }
-    HOTSTUFF_LOG_INFO("--- end client msg. ---");
-#endif
-}

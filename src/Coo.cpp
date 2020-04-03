@@ -4,6 +4,9 @@
 
 int Coo::listen_port;
 int Coo::conn_fd;
+int Coo::listen_fd_iri;
+struct sockaddr_in Coo::server_sockaddr_iri;
+struct sockaddr_in Coo::client_addr_iri;
 Coo::Coo(deal_cb deal, int port){
 	fun_deal = deal;
 	listen_port = port;
@@ -49,7 +52,7 @@ void* Coo::init_listen(void *deal){
             HOTSTUFF_LOG_INFO("recv data: %s\n",recvbuf); 
         }
         unsigned int id;
-        uint8_t hash[256/8];
+        uint8_t hash[192]; //32 * 6
         if(byte_to_dic(id, hash, recvbuf, ret)){
         	HOTSTUFF_LOG_INFO("recv id: %u\n", id); 
         	deal_cb* deal_now = (deal_cb*) deal;
@@ -76,6 +79,54 @@ bool Coo::send_data(int port, uint8_t* data, int length){
     }
     send(conn_fd, data, length,0);///send away
     close(conn_fd);
+    return true;
+}
+
+bool Coo::listen_on_iri(int port){
+    
+    if((listen_fd_iri = socket(AF_INET , SOCK_STREAM , 0)) == -1){
+        perror("socket error.\n");
+        return false;
+    }
+    server_sockaddr_iri.sin_family = AF_INET;
+    server_sockaddr_iri.sin_port = htons(port);
+    server_sockaddr_iri.sin_addr.s_addr = htonl(INADDR_ANY);
+    if(bind(listen_fd_iri,(struct sockaddr *)&server_sockaddr_iri,sizeof(server_sockaddr_iri))==-1){
+        perror("bind error.\n");
+        return false;
+    }
+    if(listen(listen_fd_iri,connect_pool) == -1){
+        perror("listen error.\n");
+        return false;
+    }
+    return true;
+    
+}
+bool Coo::listening_iri(bool& ans){
+    socklen_t length = sizeof(client_addr_iri);
+    char recvbuf[buffer_size];
+    int conn = accept(listen_fd_iri, (struct sockaddr*)&client_addr_iri, &length);
+    if(conn<0){
+        perror("connect error.\n");
+        return false;
+    }else{
+        //printf("connect successful\n");
+    }    
+    int ret = recv(conn, recvbuf, sizeof(recvbuf),0);
+    if(ret <0){
+        perror("recv error\n");
+        return false;
+    }else{
+        HOTSTUFF_LOG_INFO("recv size: %d\n",ret); 
+        HOTSTUFF_LOG_INFO("recv data: %u\n",recvbuf[0]); 
+    }
+
+    if(ret == 1){
+        ans = (recvbuf[0] == 1);    
+    }else{
+        perror("reader error\n");
+        return false;
+    } 
     return true;
 }
 #endif
